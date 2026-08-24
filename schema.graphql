@@ -1,0 +1,60 @@
+type Folder {
+  id: ID!
+  name: String!
+  createdAt: String!
+  bookmarks: [Bookmark!]!
+}
+
+type Bookmark {
+  id: ID!
+  title: String!
+  url: String!
+  tags: [String!]!
+  folderId: ID!
+  folder: Folder!
+  createdAt: String!
+}
+
+type BookmarkEdge {
+  cursor: String!
+  node: Bookmark!
+}
+
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+}
+
+type BookmarkConnection {
+  edges: [BookmarkEdge!]!
+  pageInfo: PageInfo!
+}
+
+type Query {
+  folders: [Folder!]!
+  folder(id: ID!): Folder
+  bookmarks(
+    folderId: ID
+    search: String
+    take: Int
+    cursor: String
+  ): BookmarkConnection!
+}
+
+type Mutation {
+  createFolder(name: String!): Folder!
+  createBookmark(
+    title: String!
+    url: String!
+    folderId: ID!
+    tags: [String!]
+  ): Bookmark!
+  updateBookmark(
+    id: ID!
+    title: String
+    url: String
+    tags: [String!]
+  ): Bookmark!
+  deleteBookmark(id: ID!): Bookmark!
+  moveBookmark(id: ID!, folderId: ID!): Bookmark!
+}
