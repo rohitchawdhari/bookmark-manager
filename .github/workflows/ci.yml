@@ -2,9 +2,9 @@ name: CI
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   test:
@@ -43,7 +43,7 @@ jobs:
         run: bunx --bun prisma generate
 
       - name: Run Database Migrations
-        run: bunx --bun prisma migrate dev --skip-generate
+        run: bunx --bun prisma migrate deploy
 
       - name: Run Sanity Checks (Lint, Typecheck, Test)
         run: bun run sanity
